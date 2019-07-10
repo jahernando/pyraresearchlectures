@@ -14,13 +14,14 @@ marker = 'o'
 def plt_htsimple(hs, x0 = None, nbins = 100):
     q0s, q1s = hs.q0s, hs.q1s
     qrange = hs.qrange()
-    plt.hist(q0s, nbins, density = True, range = qrange, color = h0color,
+    c, _ , _ = plt.hist(q0s, nbins, density = True, range = qrange, color = h0color,
              alpha = 0.8, label = r'$q(x|H_0)$', histtype = 'step');
     plt.hist(q1s, nbins, density = True, range = qrange, color = h1color ,
              alpha = 0.8, label = r'$q(x|H_1)$', histtype = 'step');
     if (x0 is not None):
         q0 = hs.q(x0)
         print('q0 ', q0)
+        plt.plot((q0, q0), (0., np.max(c)), ls = '-', color = 'black');
         alpha, beta, CLs = hs.p0value(q0), hs.p1value(q0), hs.cls(q0)
         prt_hypotest(x0, alpha, beta, CLs)
     plt.xlabel('$q(x)$'); plt.ylabel('$g(q|x)$')
