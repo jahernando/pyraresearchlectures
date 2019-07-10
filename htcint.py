@@ -125,3 +125,40 @@ def _rmu_fc(mu, b, beta, full_output = False):
     if (full_output):
         result = (result, zs)
     return result
+
+
+class ciarray:
+
+    def _lim(xs, ys, alpha, reverse = False):
+        xlim = None
+        cc = 0.
+        dx = xs[1]-xs[0]
+        vxs, vys = list(xs), list(ys)
+        if (reverse):
+            vxs.reverse()
+            vys.reverse()
+        for i, xi in enumerate(vxs):
+            cc += vys[i] * dx
+            if ((cc <= alpha)): xlim = xi
+#        print('nu ', nu)
+        return xlim
+
+    def upper(xs, ys, alpha):
+        return ciarray._lim(xs, ys, alpha, reverse = True)
+
+    def lower(xs, ys, alpha):
+        return ciarray._lim(xs, ys, alpha)
+
+    def ci(xs, ys, beta):
+        alpha = (1. - beta)/2.
+        xl = ciarray.lower(xs, ys, alpha)
+        if (xl is None):
+            xl = xs[0]
+            xu = ciarray.upper(xs, ys, 2.*alpha)
+            return xl, xu
+        xu = ciarray.upper(xs, ys, alpha)
+        if (xu is None):
+            xl = ciarray.lower(xs, ys, 2.*alpha)
+            xu = xs[-1]
+            return xl, xu
+        return xl, xu
