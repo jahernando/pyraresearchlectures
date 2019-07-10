@@ -180,17 +180,17 @@ class htcomposite:
         return res
 
 
-    def tmu_rvs(self, mu = None, par = None, size = 1000):
+    def tmu_rvs(self, mu = None, mu0 = None, par = None, size = 1000):
         mu      = mu  if mu  is not None else _par(self.par, self.maskmu)
         parmu   = par if par is not None else self.par
         parmu = _setpar(parmu, mu, self.maskmu)
         xs   = [self.rvs(*parmu)[0] for i in range(size)]
-        tmus = np.array([self.tmu(xi, mu) for xi in xs])
+        tmus = np.array([self.tmu(xi, mu, mu0) for xi in xs])
         return tmus
 
 
-    def tmu_pvalue_rvs(self, tmu, tmus = None, mu = None, par = None, size = 1000):
-        tmus = self.tmus_rvs(x, mu, par, size) if tmus is None else tmus
+    def tmu_pvalue_rvs(self, tmu, tmus = None, mu = None, mu0 = None, par = None, size = 1000):
+        tmus = self.tmus_rvs(x, mu, mu0, par, size) if tmus is None else tmus
         #tmu0 = self.tmu(x, mu)
         pmu = (1.*np.sum(tmus >= tmu))/(1.*size)
         #print('tmu pval rvvs: ', pmu0, tmu0, np.mean(tmus))
