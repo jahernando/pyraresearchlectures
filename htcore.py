@@ -172,7 +172,7 @@ class htcomposite:
 
     def tmu(self, x, mu, mu0 = None, par = None, parbest = None, parmubest = None):
         if (parbest is None):
-            parbest   = self.parbest  (x, mu0, par)
+            parbest   = self.parbest  (x, mu0 = mu0, par = par)
         if (parmubest is None):
             parmubest = self.parmubest(x, mu, par)
         res = tmu(x, self.llike, parmubest, parbest)
@@ -185,7 +185,7 @@ class htcomposite:
         parmu   = par if par is not None else self.par
         parmu = _setpar(parmu, mu, self.maskmu)
         xs   = [self.rvs(*parmu)[0] for i in range(size)]
-        tmus = np.array([self.tmu(xi, mu, mu0) for xi in xs])
+        tmus = np.array([self.tmu(xi, mu, mu0 = mu0) for xi in xs])
         return tmus
 
 

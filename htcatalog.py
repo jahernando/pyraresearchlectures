@@ -67,7 +67,7 @@ class extended_norm_uniform:
 
 
     def rvs(nug, nue, tau, xmu, sig, size = 1):
-        print(nug, nue, tau, xmu, sig, size)
+        #print(nug, nue, tau, xmu, sig, size)
         #nug, nue, tau, xmu, sig = self._par(nug, nue, tau, xmu, sig)
         def _rvs():
             ne  = stats.poisson.rvs(nue, size = 1)
