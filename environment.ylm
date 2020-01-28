@@ -1,4 +1,4 @@
-name: USC-MIII
+name: pyraresearchlectures
 channels:
   - conda-forge
 dependencies:
